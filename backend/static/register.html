@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Create your account</h2>
+  <p>Start creating AI-powered videos in minutes.</p>
+
+  <input id="email" type="email" placeholder="Email address">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="register()">Create account</button>
+
+  <p id="msg" class="status"></p>
+
+  <p>
+    Already have an account?
+    <a class="link" href="/login">Log in</a>
+  </p>
+</div>
+
+<script>
+async function register() {
+  const msg = document.getElementById("msg");
+  msg.innerText = "Creating account…";
+
+  const res = await fetch("/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    msg.innerText = "Account created. Redirecting…";
+    setTimeout(() => location.href = "/login", 1000);
+  } else {
+    msg.innerText = data.error || "Registration failed";
+  }
+}
+</script>
+
+</body>
+</html>

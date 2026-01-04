@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Dashboard</h2>
+
+  <div class="card">
+    <p><strong>Email:</strong> <span id="email">—</span></p>
+    <p><strong>Credits:</strong> <span id="credits">—</span></p>
+  </div>
+
+  <!-- PAYMENTS SECTION -->
+  <h3>Upgrade your plan</h3>
+  <p>Choose a plan to get more video credits. Cancel anytime.</p>
+
+  <div class="card">
+    <h3>Starter</h3>
+    <p>30 credits / month</p>
+    <p><strong>$15 / month</strong></p>
+    <button onclick="subscribe('price_starter_monthly')">Choose Starter</button>
+  </div>
+
+  <div class="card">
+    <h3>Creator</h3>
+    <p>80 credits / month</p>
+    <p><strong>$29 / month</strong></p>
+    <button onclick="subscribe('price_creator_monthly')">Choose Creator</button>
+  </div>
+
+  <div class="card">
+    <h3>Pro</h3>
+    <p>200 credits / month</p>
+    <p><strong>$59 / month</strong></p>
+    <button onclick="subscribe('price_pro_monthly')">Choose Pro</button>
+  </div>
+
+  <button class="danger" onclick="cancelSubscription()">
+    Cancel Subscription
+  </button>
+
+  <hr>
+
+  <!-- VIDEOS -->
+  <h3>Your videos</h3>
+  <div id="videos"></div>
+
+  <a class="link" href="/create">+ Create new video</a><br>
+  <a class="link" href="/api/logout">Logout</a>
+</div>
+
+<script>
+fetch("/api/dashboard")
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById("email").innerText = d.email;
+    document.getElementById("credits").innerText = d.credits;
+
+    const v = document.getElementById("videos");
+    if (d.history.length === 0) {
+      v.innerHTML = "<p>No videos yet.</p>";
+      return;
+    }
+
+    d.history.forEach(item => {
+      v.innerHTML += `
+        <div class="card">
+          <p>${item.prompt}</p>
+          <video src="${item.video}" controls></video>
+        </div>
+      `;
+    });
+  });
+
+async function subscribe(priceId) {
+  const res = await fetch("/api/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ price: priceId })
+  });
+
+  const data = await res.json();
+  if (data.url) {
+    window.location.href = data.url;
+  } else {
+    alert("Unable to start checkout");
+  }
+}
+
+async function cancelSubscription() {
+  if (!confirm("Cancel subscription at period end?")) return;
+  await fetch("/api/subscription/cancel", { method: "POST" });
+  alert("Subscription will cancel at period end.");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Admin Metrics</h2>
+  <p>Internal SaaS performance overview.</p>
+
+  <div class="card">
+    <p><strong>Monthly Recurring Revenue (MRR)</strong></p>
+    <div class="metric">$<span id="mrr">—</span></div>
+  </div>
+
+  <div class="card">
+    <p><strong>Annual Recurring Revenue (ARR)</strong></p>
+    <div class="metric">$<span id="arr">—</span></div>
+  </div>
+
+  <div class="card">
+    <p><strong>Active Subscribers</strong></p>
+    <div class="metric"><span id="active">—</span></div>
+  </div>
+
+  <a class="link" href="/dashboard">← Back to dashboard</a>
+</div>
+
+<script>
+fetch("/api/admin/metrics")
+  .then(r => r.json())
+  .then(d => {
+    if (d.error) {
+      document.body.innerHTML = "<p style='padding:20px'>Access denied</p>";
+      return;
+    }
+    document.getElementById("mrr").innerText = d.mrr;
+    document.getElementById("arr").innerText = d.arr;
+    document.getElementById("active").innerText = d.active;
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+flask
+python-dotenv
+openai
+elevenlabs
+requests
+stripe
+werkzeug
+
+
+

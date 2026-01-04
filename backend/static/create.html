@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Video</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Create AI Video</h2>
+  <p>Write an idea, select an avatar, and generate a video.</p>
+
+  <textarea id="prompt" placeholder="Example: Motivational quote for entrepreneurs..."></textarea>
+
+  <h3>Select Avatar</h3>
+  <div class="avatar-grid">
+    <div class="avatar-card active" onclick="selectAvatar('female_pro', this)">
+      <img src="/static/avatars/female_pro.jpg">
+    </div>
+    <div class="avatar-card" onclick="selectAvatar('male_pro', this)">
+      <img src="/static/avatars/male_pro.jpg">
+    </div>
+    <div class="avatar-card" onclick="selectAvatar('creator', this)">
+      <img src="/static/avatars/creator.jpg">
+    </div>
+    <div class="avatar-card" onclick="selectAvatar('motivational', this)">
+      <img src="/static/avatars/motivational.jpg">
+    </div>
+  </div>
+
+  <select id="language">
+    <option value="en-us">English (US)</option>
+    <option value="en-uk">English (UK)</option>
+    <option value="es">Spanish</option>
+    <option value="fr">French</option>
+    <option value="de">German</option>
+  </select>
+
+  <button onclick="generateVideo()">Generate Video</button>
+
+  <div id="status" class="status"></div>
+
+  <video id="result" controls></video>
+
+  <a class="link" href="/dashboard">← Back to dashboard</a>
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>

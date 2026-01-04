@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Shorts Studio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎬 AI Shorts Studio</h1>
+    <p>Create a viral short video from one prompt</p>
+
+    <textarea id="promptInput" placeholder="Explain why consistency beats motivation..."></textarea>
+
+    <button id="generateBtn">Generate Video</button>
+
+    <div id="status"></div>
+
+    <div id="result" class="hidden">
+      <h3>Generated Script</h3>
+      <p id="scriptText"></p>
+
+      <h3>Video Output</h3>
+      <a id="videoLink" href="#" target="_blank">Download / View Video</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
