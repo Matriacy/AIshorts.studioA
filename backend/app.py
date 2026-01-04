@@ -12,38 +12,7 @@ load_dotenv()
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
-# ======================
-# PAGE ROUTES (HTML)
-# ======================
 
-@app.route("/")
-def index():
-    return redirect("/login")
-
-
-@app.route("/login")
-def login_page():
-    return send_from_directory("static", "login.html")
-
-
-@app.route("/register")
-def register_page():
-    return send_from_directory("static", "register.html")
-
-
-@app.route("/dashboard")
-def dashboard_page():
-    return send_from_directory("static", "dashboard.html")
-
-
-@app.route("/create")
-def create_page():
-    return send_from_directory("static", "create.html")
-
-
-@app.route("/admin")
-def admin_page():
-    return send_from_directory("static", "admin.html")
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 eleven = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
